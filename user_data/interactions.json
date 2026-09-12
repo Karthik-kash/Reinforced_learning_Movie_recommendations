@@ -1,0 +1,58 @@
+{
+    "guest_user": {
+        "user_id": "guest_user",
+        "preferred_genres": [
+            "Action",
+            "Comedy",
+            "Science Fiction",
+            "Thriller",
+            "Mystery",
+            "Crime"
+        ],
+        "watched_movies": [
+            231,
+            4314,
+            3789,
+            4305,
+            3790,
+            4095,
+            16,
+            3168,
+            623,
+            4111,
+            4471,
+            616,
+            3982
+        ],
+        "rated_movies": {
+            "231": 5,
+            "4314": 5,
+            "3789": 4,
+            "4305": 5,
+            "3790": 5,
+            "4095": 2,
+            "16": 4,
+            "3168": 5,
+            "623": 1,
+            "4111": 1,
+            "4471": 1,
+            "616": 5,
+            "3982": 4
+        },
+        "watchlist": [
+            4058,
+            4157
+        ],
+        "total_ratings": 13,
+        "avg_rating": 3.6153846153846154
+    },
+    "usr_8c7f8ffc6f01": {
+        "user_id": "usr_8c7f8ffc6f01",
+        "preferred_genres": [],
+        "watched_movies": [],
+        "rated_movies": {},
+        "watchlist": [],
+        "total_ratings": 0,
+        "avg_rating": 0.0
+    }
+}

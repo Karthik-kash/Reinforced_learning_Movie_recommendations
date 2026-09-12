@@ -1,0 +1,16 @@
+pandas
+numpy
+scikit-learn
+streamlit
+matplotlib
+plotly
+joblib
+fastapi
+uvicorn[standard]
+pydantic-settings
+httpx
+pytest
+requests
+argon2-cffi
+PyJWT
+email-validator

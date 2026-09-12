@@ -1,0 +1,10 @@
+{
+  "by_email": {
+    "demo@movieverse.local": {
+      "user_id": "guest_user",
+      "email": "demo@movieverse.local",
+      "username": "Demo Viewer",
+      "is_demo": true
+    }
+  }
+}

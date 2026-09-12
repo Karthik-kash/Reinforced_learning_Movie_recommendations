@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Local secrets
+.env
+
+# Frontend
+frontend-react/node_modules/
+frontend-react/dist/
+
+# Machine Learning Models (Ignored due to size limits)
+models/*.pkl
+models/content_model.pkl
+models/rl_agent.pkl
