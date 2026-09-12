@@ -13,7 +13,6 @@ MovieVerse is a full-stack movie discovery prototype. It combines a Python recom
 - Genre-level contextual-bandit/Q-value reranking from feedback
 - Local CSV, JSON, and joblib persistence; no relational database
 
-The active application is the React + FastAPI version. `app.py` is the older Streamlit interface and remains only as a compatibility path.
 
 ## Architecture at a glance
 
@@ -33,7 +32,6 @@ FastAPI API (backend/app)
                  +--> feedback and profile services
 ```
 
-At backend startup, the application loads `data/movies.csv`, rebuilds `data/processed_movies.csv`, loads `models/content_model.pkl` and `models/rl_agent.pkl`, and merges poster data from `data/poster_metadata.csv` when that file exists.
 
 ## Repository layout
 
@@ -51,17 +49,6 @@ MovieVerse/
 └── .env.example              JWT configuration template
 ```
 
-Important implementation files include:
-
-- `backend/app/main.py`: creates FastAPI, configures CORS, initializes application state, and registers `/api` routes.
-- `backend/app/infrastructure/container.py`: builds the recommendation container and loads catalog/model data.
-- `backend/app/infrastructure/auth_store.py`: persists users in JSON and creates the demo user.
-- `backend/app/services/catalog.py`: coordinates recommendations, search, profile, interactions, and dashboard data.
-- `src/recommender.py`: generates content-based candidates.
-- `src/rl_agent.py`: reranks candidates using learned genre values.
-- `src/user_profile.py` and `src/feedback.py`: persist interaction state and apply rating feedback.
-- `frontend-react/src/App.tsx`: auth gate, onboarding gate, navigation, page loading, and interaction actions.
-
 ## End-to-end behavior
 
 1. A user registers, logs in, or chooses the demo account.
@@ -71,32 +58,6 @@ Important implementation files include:
 5. Watched movies are excluded, then the RL-style agent reranks candidates using genre Q-values.
 6. Search, watchlist, history, profile, and dashboard requests read the same local catalog and user state.
 7. Ratings become reward signals and update the profile/learning state used by later recommendations.
-
-## API surface
-
-The backend is mounted under `/api` and is available in the FastAPI Swagger UI at `/docs`.
-
-| Area | Endpoints | Auth |
-| --- | --- | --- |
-| Health | `GET /api/health` | Public |
-| Auth | `POST /api/auth/register`, `/login`, `/demo`, `GET /me` | `/me` protected |
-| Movies | `GET /api/movies/search`, `/{movie_id}`, `/{movie_id}/similar` | Public |
-| Recommendations | `GET /api/recommendations` | Protected |
-| Profile | `GET /api/profile`, `PUT /api/profile/preferences` | Protected |
-| Interactions | History, watchlist, watched, rating, add/remove watchlist | Protected |
-| Dashboard | `GET /api/dashboard` | Protected |
-
-## Data and persistence
-
-There is currently no SQL or NoSQL database. This is a local prototype with file-based persistence:
-
-- `data/movies.csv`: source movie catalog.
-- `data/processed_movies.csv`: generated feature data used by the recommender.
-- `data/poster_metadata.csv`: optional TMDB poster metadata merged into API movie responses.
-- `user_data/users.json`: account records, usernames, email addresses, and Argon2 password hashes. The demo account is ensured on backend startup.
-- `user_data/interactions.json`: per-user preferred genres, watched movies, ratings, watchlist, and summary values.
-
-JSON storage is suitable for a local demo, but it is not designed for concurrent production traffic, migrations, backups, or multi-process deployments.
 
 ## Run locally
 
@@ -143,11 +104,3 @@ Poster enrichment is optional. The utility in `scripts/enrich_movie_metadata.py`
 $env:TMDB_API_KEY = "your-tmdb-api-key"
 python scripts/enrich_movie_metadata.py
 ```
-
-## Limitations and next steps
-
-- Replace JSON persistence with a database and proper migrations.
-- Move secrets and CORS origins into a production configuration system.
-- Add refresh/revocation tokens, rate limiting, and deployment hardening.
-- Improve recommendation evaluation and user-level model isolation.
-- Resolve or provide fallback artwork for unmatched poster metadata.
