@@ -95,8 +95,6 @@ There is currently no SQL or NoSQL database. This is a local prototype with file
 - `data/poster_metadata.csv`: optional TMDB poster metadata merged into API movie responses.
 - `user_data/users.json`: account records, usernames, email addresses, and Argon2 password hashes. The demo account is ensured on backend startup.
 - `user_data/interactions.json`: per-user preferred genres, watched movies, ratings, watchlist, and summary values.
-- `models/content_model.pkl`: saved TF-IDF/content model artifact.
-- `models/rl_agent.pkl`: saved RL-style agent state.
 
 JSON storage is suitable for a local demo, but it is not designed for concurrent production traffic, migrations, backups, or multi-process deployments.
 
@@ -110,10 +108,8 @@ From the repository root in PowerShell:
 python -m venv .venv
 .\\.venv\\Scripts\\Activate.ps1
 pip install -r requirements.txt
-uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8000
+uvicorn backend.app.main:app --reload
 ```
-
-The backend defaults to `http://localhost:8000`. The frontend currently uses `http://localhost:8000/api` unless `VITE_API_URL` is provided.
 
 ### Frontend
 
@@ -127,22 +123,6 @@ npm run dev
 
 Open the Vite URL, normally `http://localhost:5173`.
 
-To run the backend on another port, configure the frontend before starting Vite:
-
-```powershell
-$env:VITE_API_URL = "http://localhost:8001/api"
-npm run dev
-```
-
-Useful frontend commands are `npm run build`, `npm run lint`, and `npm run preview`.
-
-### Optional legacy interface
-
-```powershell
-streamlit run app.py
-```
-
-This path is separate from the active React client and is not required to run the current application.
 
 ## Configuration and metadata enrichment
 
@@ -171,5 +151,3 @@ python scripts/enrich_movie_metadata.py
 - Add refresh/revocation tokens, rate limiting, and deployment hardening.
 - Improve recommendation evaluation and user-level model isolation.
 - Resolve or provide fallback artwork for unmatched poster metadata.
-
-MovieVerse is currently a learning and portfolio prototype, not a production deployment.
